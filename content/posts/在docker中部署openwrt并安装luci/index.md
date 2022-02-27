@@ -5,8 +5,6 @@ tags: ['docker', 'luci', 'openwrt']
 draft: false
 ---
 
-
-
 ## 准备
 
 首先是打开网卡混杂模式 `sudo ip link set eth0 promisc on`
@@ -64,7 +62,7 @@ config interface 'lan'
 
 参考<https://pylist.com/t/1555924557>
 
-源：http://mirrors.ustc.edu.cn/lede/releases/18.06.4/packages/
+源：<http://mirrors.ustc.edu.cn/lede/releases/18.06.4/packages/>
 
 openwrt的版本可以使用 `cat /etc/banner` 来查看 linux 内核版本可以使用 `cat /proc/version` 或者 `uname -a` 查看
 
