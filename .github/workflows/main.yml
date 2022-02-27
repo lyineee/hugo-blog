@@ -30,7 +30,7 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         env: 
           ARGS: "-rltgoDzvO"
-          SOURCE: "dist/"
+          SOURCE: "public/"
           REMOTE_HOST: ${{ secrets.HOST }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_KEY }}
