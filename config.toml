@@ -1,0 +1,8 @@
+baseURL = 'http://lyine.pw/'
+languageCode = 'en-us'
+title = 'My New Hugo Site'
+theme = "PaperMod"
+
+[taxonomies]
+category = 'categories'
+tag = 'tags'
