@@ -1,0 +1,29 @@
+baseURL: "http://lyine.pw/"
+languageCode: "en-us"
+title: "lyine blog"
+theme: "PaperMod"
+
+params:
+  defaultTheme: "auto"
+
+outputs:
+  home: ["HTML", "RSS", "JSON"]
+
+menu:
+  main:
+    - identifier: search
+      name: search
+      url: /search/
+      weight: 10
+    - identifier: tags
+      name: tags
+      url: /tags/
+      weight: 20
+    - identifier: archives
+      name: archives
+      url: /archives/
+      weight: 30
+
+taxonomies:
+  category: "categories"
+  tag: "tags"
