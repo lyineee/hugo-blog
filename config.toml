@@ -3,6 +3,12 @@ languageCode = 'en-us'
 title = 'My New Hugo Site'
 theme = "PaperMod"
 
+[params]
+defaultTheme = 'auto'
+
+[outputs]
+home = ['HTML', 'RSS', 'JSON']
+
 [taxonomies]
 category = 'categories'
 tag = 'tags'
