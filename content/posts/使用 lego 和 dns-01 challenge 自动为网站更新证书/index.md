@@ -2,6 +2,7 @@
 title: "使用 lego 和 dns-01 challenge 自动为网站更新证书"
 date: 2022-01-15T19:14:00+08:00
 Tags: ['blog']
+ShowToc: true
 ---
 
 ## Lego
