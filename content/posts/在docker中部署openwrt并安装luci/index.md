@@ -157,10 +157,7 @@ commit 和 push 默认的 tag 均为 latest
 
 ![images/6.png](images/6.png)
 
-<aside>
-💡 记得安装 `opkg install luci luci-base luci-compat` ，不然很多luciapp会打不开，好像主要是 luci-compat 的问题
-
-</aside>
+> 💡 记得安装 `opkg install luci luci-base luci-compat` ，不然很多luciapp会打不开，好像主要是 luci-compat 的问题
 
 ## luci本地化
 
@@ -186,10 +183,7 @@ commit 和 push 默认的 tag 均为 latest
 
 ### 安装内核
 
-<aside>
-💡 按下面写的步骤就可以了，记得解压并重命名文件为clash就可以了！！不用去 `opkg install`
-
-</aside>
+> 💡 按下面写的步骤就可以了，记得解压并重命名文件为clash就可以了！！不用去 `opkg install`
 
 ![images/9.png](images/9.png)
 
@@ -199,10 +193,7 @@ github: [https://github.com/vernesong/OpenClash](https://github.com/vernesong/Op
 
 内核：https://github.com/frainzy1477/clashrdev/releases
 
-<aside>
-💡 安装时可能出现因为包不兼容导致无法安装的情况。这时候在安装时加如参数 `--force-overwrite` 一般可以解决问题
-
-</aside>
+> 💡 安装时可能出现因为包不兼容导致无法安装的情况。这时候在安装时加如参数 `--force-overwrite` 一般可以解决问题
 
 比如  `opkg install  /tmp/upload.ipk  --force-overwrite --force-depends`
 
@@ -226,10 +217,7 @@ github: [https://github.com/vernesong/OpenClash](https://github.com/vernesong/Op
 
 记得在smartdns的设置里面关闭端口重定向
 
-<aside>
-💡 注意：openclash里面的配置文件不能重名，就算删除了以前的配置参数也不能。否则会让配置文件不改变。
-
-</aside>
+> 💡 注意：openclash里面的配置文件不能重名，就算删除了以前的配置参数也不能。否则会让配置文件不改变。
 
 ## 使用 airplay audio
 

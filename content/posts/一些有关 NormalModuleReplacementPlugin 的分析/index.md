@@ -106,10 +106,7 @@ new webpack.NormalModuleReplacementPlugin(
 
 可以看出第一种结构的 `result` 中没有 `createData` 中的数据，而 `createData` 中的数据主要是本地文件的绝对路径，所以可以推测后一种 `result` 是在 webpack 向系统请求文件时产生的，而前一种是用户代码在向 webpack 请求资源时产生的。
 
-<aside>
-💡 在 plugin 的源代码中用来和用户设置的正则表达式匹配的两个变量是 `createData.resource` 和 `createData.result.request`。而从result的数据中可以看到前者使用的是本地计算机的绝对路径，使用的路径分隔符也是更具本地的系统来决定的，所以在 windows 上使用的是 `\\`  ，而后者使用的是在用户代码中引入文件时的路径，这是一般是 linux 的分隔符 `/` 。在设置正则表达式时要注意这一点
-
-</aside>
+> 💡 在 plugin 的源代码中用来和用户设置的正则表达式匹配的两个变量是 `createData.resource` 和 `createData.result.request`。而从result的数据中可以看到前者使用的是本地计算机的绝对路径，使用的路径分隔符也是更具本地的系统来决定的，所以在 windows 上使用的是 `\\`  ，而后者使用的是在用户代码中引入文件时的路径，这是一般是 linux 的分隔符 `/` 。在设置正则表达式时要注意这一点
 
 ## 结论
 

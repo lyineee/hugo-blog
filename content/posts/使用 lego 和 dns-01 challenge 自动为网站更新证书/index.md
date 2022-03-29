@@ -56,10 +56,7 @@ volumes:
 
 上面提到的令牌以 `env_file` 的形式保存在 `./lego/env.lego` 中，`-a` 参数可以默认同意 Let's Encrypt 的用户协议，`--day 45` 表示如果距离证书过期小于 45 天就更新证书。
 
-<aside>
-💡 Lego 命令的格式为 `lego [global options] command [command options] [arguments...]` 也就是说 command 也就是 `run` `renew` 命令的位置需要在 `[global options]` 之后
-
-</aside>
+> 💡 Lego 命令的格式为 `lego [global options] command [command options] [arguments...]` 也就是说 command 也就是 `run` `renew` 命令的位置需要在 `[global options]` 之后
 
 ## crontab 自动化
 
