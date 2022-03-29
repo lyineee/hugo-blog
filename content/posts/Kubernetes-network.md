@@ -54,10 +54,7 @@ udp6       0      0 :::51820                :::*                                
 
 可以看到 Wireguard 会使用 51820 端口进行通信，而后面的 `PID/Program name` 为 `-` 则说明这是从内核中的调用（Wireguard 内核模块）
 
-<aside>
-💡 使用 VXLAN 后端时也可以使用相同的命令来查看 UDP 协议端口的占用
-
-</aside>
+> 💡 使用 VXLAN 后端时也可以使用相同的命令来查看 UDP 协议端口的占用
 
 在有节点加入后使用 `wg show` 可以看到有新的 peer 产生
 
@@ -76,16 +73,10 @@ peer: sz1skDooVieIrwLInioYwItM1MfCUZI0iz8/0kioeR0=
   persistent keepalive: every 25 seconds
 ```
 
-<aside>
-💡 如果有节点不能通过 wireguard 连接，Flannel 会不断尝试连接产生 peer，最后回导致 `wg show` 中有很多 peer，这时可以通过命令 `for i in $(wg |grep peer|awk '{print $2}');do wg set flannel.1 peer $i remove;done` 来删除所有 peer
-
-</aside>
+> 💡 如果有节点不能通过 wireguard 连接，Flannel 会不断尝试连接产生 peer，最后回导致 `wg show` 中有很多 peer，这时可以通过命令 `for i in $(wg |grep peer|awk '{print $2}');do wg set flannel.1 peer $i remove;done` 来删除所有 peer
 
 ## Wireguard 的问题
 
 再将一个节点加入集群后发现这一个节点不能与控制面板所在的节点通信，且 `wg show` 命令发现没有任何的输出，`lsmod | grep wireguard` 发现 wireguard 内核模块没有加载，`modprobe wireguard` 报错 `FATAL: Module wireguard not found in directory` 。自己建立一个 `wg0.conf` 尝试 `wg-quick up wg0` 报错 `RTNETLINK answers: Operation not supported` 按 [stackoverflow](https://stackoverflow.com/questions/62356581/wireguard-vpn-how-to-fix-operation-not-supported-if-it-worked-before) 上的答案尝试更新 linux-header 发现问题依旧存在。最后发现有问题的这个节点的 linux 内核版本 `4.15.0-20-generic` 与其他节点版本 `4.15.0-162-generic` 相比很低，最后更新内核 `sudo apt update && sudo apt apt dist-upgrade` 后 Wireguard 工作正常了。
 
-<aside>
-❓ 最后解决问题时还将 proxier 从 iptables 改为了 ipvs 模式`-kube-proxy-arg "proxy-mode=ipvs" "masquerade-all=true"` 不知道与问题的解决有没有关系
-
-</aside>
+> ❓最后解决问题时还将 proxier 从 iptables 改为了 ipvs 模式`-kube-proxy-arg "proxy-mode=ipvs" "masquerade-all=true"` 不知道与问题的解决有没有关系
