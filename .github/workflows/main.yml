@@ -3,7 +3,7 @@ name: GitHub Pages
 on:
   push:
     branches:
-      - master  # Set a branch to deploy
+      - master # Set a branch to deploy
   pull_request:
 
 jobs:
@@ -14,24 +14,42 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          submodules: true  # Fetch Hugo themes (true OR recursive)
-          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+          submodules: true # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0 # Fetch all history for .GitInfo and .Lastmod
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: '0.92.2'
+          hugo-version: "0.92.2"
           # extended: true
 
       - name: Build
         run: hugo --minify
-        
+
       - name: deploy hugo
         uses: easingthemes/ssh-deploy@main
-        env: 
+        env:
           ARGS: "-rltgoDzvO"
           SOURCE: "public/"
           REMOTE_HOST: ${{ secrets.HOST }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_KEY }}
           TARGET: "/www/hugo-blog/"
+
+      - name: tar dist
+        run: tar -czvf dist.tar.gz public/
+
+      - name: head commit hash use to make a release and message
+        run: |
+          GITHUB_SHA_SHORT=$( echo '${{ github.event.head_commit.id }}' | cut -c-7 )
+          echo "commit_hash:" $GITHUB_SHA_SHORT
+          RELEASE_TAG=$(date '+%Y%m%d%H%M%S')-$GITHUB_SHA_SHORT
+          echo release tag: $RELEASE_TAG
+          echo "GITHUB_SHA_SHORT=$GITHUB_SHA_SHORT" >> $GITHUB_ENV
+          echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
+
+      - name: make a relase with commit hash
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist.tar.gz
+          tag_name: ${{ env.RELEASE_TAG }}
