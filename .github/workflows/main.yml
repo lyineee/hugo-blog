@@ -37,7 +37,7 @@ jobs:
           TARGET: "/www/hugo-blog/"
 
       - name: tar dist
-        run: tar -czvf dist.tar.gz public/
+        run: tar -C public/ -czvf dist.tar.gz .
 
       - name: head commit hash use to make a release and message
         run: |
