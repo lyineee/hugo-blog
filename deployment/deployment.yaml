@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hugo-blog
+  labels:
+    app: hugo-blog
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hugo-blog
+  template:
+    metadata:
+      labels:
+        app: hugo-blog
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.14.2
+          volumeMounts:
+            - name: config-vol
+              mountPath: /etc/nginx/conf.d
+            - name: static-file-vol
+              mountPath: /usr/share/nginx/html
+        - name: static-file-sidecar
+          image: lyine/release-sidecar:0.1.1
+          args: ["--repo", "lyineee/hugo-blog"]
+          volumeMounts:
+            - name: static-file-vol
+              mountPath: /usr/share/nginx/html
+
+      volumes:
+        - name: config-vol
+          configMap:
+            name: hugo-blog-nginx-cm
+        - name: static-file-vol
+          emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hugo-blog
+spec:
+  selector:
+    app: hugo-blog
+  ports:
+    - port: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hugo-blog-ingress
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: default-redirectscheme-https@kubernetescrd
+spec:
+  rules:
+    - host: lyine.pw
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hugo-blog
+                port:
+                  number: 80
+
+---
+# Redirect to https
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: redirectscheme-https
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
